@@ -14,6 +14,8 @@ type Server struct {
 func (s *Server) ListenAndServe() error {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("GET /health", s.health)
+
 	return http.ListenAndServe(fmt.Sprintf(":%d", s.Port), mux)
 }
 

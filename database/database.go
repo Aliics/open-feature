@@ -8,17 +8,25 @@ type Database interface {
 	Delete(key string) error
 }
 
-func NewDatabase(databaseType string, port int) (Database, error) {
+func NewDatabase(
+	databaseType string,
+	port int,
+	host, dbname, user, password string,
+) (Database, error) {
 	switch databaseType {
 	case "psql":
-		return NewPSQLDatabase(port)
+		return NewPSQLDatabase(port, host, dbname, user, password)
 	default:
 		return nil, ErrUnknownDatabaseType
 	}
 }
 
 const (
-	DefaultPort = 5432
+	DefaultPort     = 5432
+	DefaultHost     = "localhost"
+	DefaultDBName   = "open-feature"
+	DefaultUser     = "postgres"
+	DefaultPassword = "password"
 
 	TypePSQL = "psql"
 )
