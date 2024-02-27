@@ -16,3 +16,7 @@ func (s *Server) ListenAndServe() error {
 
 	return http.ListenAndServe(fmt.Sprintf(":%d", s.Port), mux)
 }
+
+const (
+	DefaultPort = 8080
+)

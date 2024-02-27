@@ -8,9 +8,9 @@ import (
 )
 
 var (
-	port         = flag.Int("port", 8080, "specify the port the api listens on")
-	databaseType = flag.String("database-type", "psql", "specify the backend database type to use")
-	databasePort = flag.Int("database-port", 5432, "specify the backend database port to connect to")
+	port         = flag.Int("port", api.DefaultPort, "specify the port the api listens on")
+	databaseType = flag.String("database-type", database.TypePSQL, "specify the backend database type to use")
+	databasePort = flag.Int("database-port", database.DefaultPort, "specify the backend database port to connect to")
 )
 
 func main() {
