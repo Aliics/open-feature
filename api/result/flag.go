@@ -25,6 +25,9 @@ func (f *Flag) Map(v any) error {
 		}
 
 		return nil
+	case *database.Flag:
+		// Sometimes we deal with pointers.
+		return f.Map(*x)
 	default:
 		return fmt.Errorf("cannot map flag from type: %t", v)
 	}

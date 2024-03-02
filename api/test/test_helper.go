@@ -15,11 +15,11 @@ type testServer struct {
 	api      *api.Server
 }
 
-func (t testServer) Get(url string) (*http.Response, error) {
+func (t testServer) Get(url string) (resp *http.Response, err error) {
 	return t.httptest.Client().Get(t.httptest.URL + url)
 }
 
-func (t testServer) Post(url string, contentType string, body io.Reader) (*http.Response, error) {
+func (t testServer) Post(url string, contentType string, body io.Reader) (resp *http.Response, err error) {
 	return t.httptest.Client().Post(t.httptest.URL+url, contentType, body)
 }
 
