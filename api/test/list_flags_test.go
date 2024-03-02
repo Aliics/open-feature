@@ -20,13 +20,29 @@ func Test_FlagsAll_ShouldReturnEmptyList_WhenNoFlagsHaveBeenCreated(t *testing.T
 func Test_FlagsAll_ShouldReturnOneFlag_WhenAFlagHasBeenInserted(t *testing.T) {
 	s := initializeTestServer()
 	_ = s.api.Database.Put(database.Flag{
-		Key:  "nice-test-flag",
-		Rule: database.Rule{},
+		Key: "nice-test-flag",
+		Rules: []database.Rule{
+			database.StaticRule(true),
+		},
 	})
 
 	resp, err := s.Get("/flags/all")
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
-	assertJSONBody(t, resp, `[{"key": "nice-test-flag"}]`)
+	assertJSONBody(
+		t,
+		resp,
+		`[
+		  {
+			"key": "nice-test-flag",
+			"rules": [
+			  {
+				"type": "static",
+				"data": true
+			  }
+			]
+		  }
+		]`,
+	)
 }

@@ -1,10 +1,9 @@
 package api
 
-import "net/http"
-
-type flag struct {
-	Key string `json:"key"`
-}
+import (
+	"net/http"
+	"open-feature/api/result"
+)
 
 func (s *Server) listFlags(w http.ResponseWriter, _ *http.Request) {
 	flags, err := s.Database.All()
@@ -14,12 +13,7 @@ func (s *Server) listFlags(w http.ResponseWriter, _ *http.Request) {
 		return
 	}
 
-	result := make([]flag, len(flags))
-	for i, f := range flags {
-		result[i] = flag{f.Key}
-	}
-
-	writeJSON(w, result)
+	result.Write[*result.Flag](w, flags)
 }
 
 func (s *Server) getFlag(w http.ResponseWriter, r *http.Request) {

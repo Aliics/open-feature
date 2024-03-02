@@ -3,6 +3,7 @@ package api
 import (
 	"log/slog"
 	"net/http"
+	"open-feature/api/result"
 	"open-feature/database"
 )
 
@@ -35,5 +36,5 @@ func (s *Server) health(w http.ResponseWriter, _ *http.Request) {
 		}
 	}
 
-	writeJSON(w, res)
+	result.WriteAny(w, res)
 }

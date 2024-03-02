@@ -33,7 +33,7 @@ func (m *MemDatabase) Put(flag Flag) error {
 		return nil
 	}
 
-	m.flags[i].Rule = flag.Rule
+	m.flags[i] = flag
 
 	return nil
 }
