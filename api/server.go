@@ -2,8 +2,8 @@ package api
 
 import (
 	"fmt"
-	"github.com/aliics/open-feature/database"
 	"net/http"
+	"open-feature/database"
 )
 
 type Server struct {
@@ -12,11 +12,20 @@ type Server struct {
 }
 
 func (s *Server) ListenAndServe() error {
+	return http.ListenAndServe(
+		fmt.Sprintf(":%d", s.Port),
+		s.NewServeMux(),
+	)
+}
+
+func (s *Server) NewServeMux() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /health", s.health)
+	mux.HandleFunc("GET /flags/all", s.listFlags)
+	mux.HandleFunc("GET /flags/{key}", s.getFlag)
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", s.Port), mux)
+	return mux
 }
 
 const (

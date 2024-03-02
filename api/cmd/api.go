@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/aliics/open-feature/api"
-	"github.com/aliics/open-feature/database"
 	"log/slog"
+	"open-feature/api"
+	"open-feature/database"
 )
 
 var (
@@ -33,9 +33,9 @@ func main() {
 
 	s := api.Server{
 		Config: api.Config{
-			Port:     *port,
-			Database: db,
+			Port: *port,
 		},
+		Database: db,
 	}
 
 	slog.Info("starting server", "port", *port)

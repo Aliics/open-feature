@@ -1,9 +1,9 @@
 package api
 
 import (
-	"github.com/aliics/open-feature/database"
 	"log/slog"
 	"net/http"
+	"open-feature/database"
 )
 
 type healthCheckResponse struct {

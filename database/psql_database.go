@@ -29,12 +29,17 @@ func NewPSQLDatabase(port int, host, dbname, user, password string) (*PSQLDataba
 	return &PSQLDatabase{db}, nil
 }
 
-func (p *PSQLDatabase) Get(key string) (bool, error) {
+func (p *PSQLDatabase) All() ([]Flag, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (p *PSQLDatabase) Put(key string, rule Rule) error {
+func (p *PSQLDatabase) Get(key string) (*Flag, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (p *PSQLDatabase) Put(flag Flag) error {
 	//TODO implement me
 	panic("implement me")
 }

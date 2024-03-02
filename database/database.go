@@ -3,8 +3,9 @@ package database
 import "errors"
 
 type Database interface {
-	Get(key string) (bool, error)
-	Put(key string, rule Rule) error
+	All() ([]Flag, error)
+	Get(key string) (*Flag, error)
+	Put(flag Flag) error
 	Delete(key string) error
 }
 
@@ -16,6 +17,8 @@ func NewDatabase(
 	switch databaseType {
 	case "psql":
 		return NewPSQLDatabase(port, host, dbname, user, password)
+	case "mem":
+		return NewMemDatabase(), nil
 	default:
 		return nil, ErrUnknownDatabaseType
 	}
@@ -29,6 +32,7 @@ const (
 	DefaultPassword = "password"
 
 	TypePSQL = "psql"
+	TypeMem  = "mem"
 )
 
 var (

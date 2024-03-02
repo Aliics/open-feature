@@ -1,4 +1,4 @@
-module github.com/aliics/open-feature/database
+module open-feature/database
 
 go 1.22.0
 
