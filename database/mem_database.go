@@ -39,7 +39,12 @@ func (m *MemDatabase) Put(flag Flag) error {
 }
 
 func (m *MemDatabase) Delete(key string) error {
-	m.flags = slices.DeleteFunc(m.flags, flagByKey(key))
+	i := slices.IndexFunc(m.flags, flagByKey(key))
+	if i < 0 {
+		return ErrFlagNotFound
+	}
+
+	m.flags = slices.Delete(m.flags, i, i+1)
 	return nil
 }
 

@@ -23,6 +23,15 @@ func (t testServer) Post(url string, contentType string, body io.Reader) (resp *
 	return t.httptest.Client().Post(t.httptest.URL+url, contentType, body)
 }
 
+func (t testServer) Delete(url string) (resp *http.Response, err error) {
+	req, err := http.NewRequest(http.MethodDelete, t.httptest.URL+url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return t.httptest.Client().Do(req)
+}
+
 func initializeTestServer() testServer {
 	s := api.Server{
 		Database: database.NewMemDatabase(),

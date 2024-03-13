@@ -10,7 +10,7 @@ import (
 func Test_FlagsAll_ShouldReturnEmptyList_WhenNoFlagsHaveBeenCreated(t *testing.T) {
 	s := initializeTestServer()
 
-	resp, err := s.Get("/flags/all")
+	resp, err := s.Get("/flags/")
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
@@ -26,7 +26,7 @@ func Test_FlagsAll_ShouldReturnOneFlag_WhenAFlagHasBeenInserted(t *testing.T) {
 		},
 	})
 
-	resp, err := s.Get("/flags/all")
+	resp, err := s.Get("/flags/")
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)

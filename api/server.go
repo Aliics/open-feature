@@ -22,8 +22,11 @@ func (s *Server) NewServeMux() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /health", s.health)
-	mux.HandleFunc("GET /flags/all", s.listFlags)
+	mux.HandleFunc("GET /flags/", s.listFlags)
 	mux.HandleFunc("GET /flags/{key}", s.getFlag)
+	mux.HandleFunc("POST /flags/", s.createFlag)
+	mux.HandleFunc("POST /flags/{key}", s.updateFlag)
+	mux.HandleFunc("DELETE /flags/{key}", s.deleteFlag)
 
 	return mux
 }
