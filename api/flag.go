@@ -3,6 +3,8 @@ package api
 import (
 	"errors"
 	"net/http"
+	"open-feature/api/input"
+	"open-feature/api/model"
 	"open-feature/api/result"
 	"open-feature/database"
 )
@@ -34,12 +36,18 @@ func (s *Server) getFlag(w http.ResponseWriter, r *http.Request) {
 	result.Write[*result.Flag](w, flag)
 }
 
-func (s *Server) createFlag(w http.ResponseWriter, r *http.Request) {
+func (s *Server) putFlag(w http.ResponseWriter, r *http.Request) {
+	inputFlag, err := input.GetValidatedInput[input.Flag](r)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
-}
-
-func (s *Server) updateFlag(w http.ResponseWriter, r *http.Request) {
-
+	err = s.Put(databaseFlagFromInputFlag(inputFlag))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (s *Server) deleteFlag(w http.ResponseWriter, r *http.Request) {
@@ -53,6 +61,20 @@ func (s *Server) deleteFlag(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func databaseFlagFromInputFlag(inputFlag *input.Flag) database.Flag {
+	rules := make([]database.Rule, len(inputFlag.Rules))
+	for i, rule := range inputFlag.Rules {
+		switch rule.Type {
+		case model.RuleTypeStatic:
+			rules[i] = database.StaticRule(rule.Data.(bool))
+		}
+	}
+	return database.Flag{
+		Key:   inputFlag.Key,
+		Rules: rules,
 	}
 }
 

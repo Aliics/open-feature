@@ -7,13 +7,13 @@ import (
 	"reflect"
 )
 
-// Write will attempt to map the argument v to the Mapper given as a type parameter.
+// Write will attempt to map the argument v to the Resulter given as a type parameter.
 // If v is a slice or an array, it will do this operation iteratively.
 // Once mapped, we will write this to the http.Response.
-func Write[M Mapper](w http.ResponseWriter, v any) {
+func Write[M Resulter](w http.ResponseWriter, v any) {
 	one := func(v any) (M, error) {
 		m := reflect.New(reflect.TypeFor[M]().Elem()).Interface().(M)
-		err := m.Map(v)
+		err := m.Result(v)
 		return m, err
 	}
 

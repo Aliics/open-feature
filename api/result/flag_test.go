@@ -3,11 +3,12 @@ package result
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"open-feature/api/model"
 	"open-feature/database"
 	"testing"
 )
 
-func TestFlag_Map(t *testing.T) {
+func TestFlag_Result(t *testing.T) {
 	tests := []struct {
 		name    string
 		input   database.Flag
@@ -26,7 +27,7 @@ func TestFlag_Map(t *testing.T) {
 				"always one",
 				[]Rule{
 					{
-						RuleTypeStatic,
+						model.RuleTypeStatic,
 						true,
 					},
 				},
@@ -37,9 +38,9 @@ func TestFlag_Map(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			f := &Flag{}
-			err := f.Map(tt.input)
+			err := f.Result(tt.input)
 			assert.Equal(t, &tt.want, f)
-			tt.wantErr(t, err, fmt.Sprintf("Map(%v)", tt.input))
+			tt.wantErr(t, err, fmt.Sprintf("Result(%v)", tt.input))
 		})
 	}
 }
